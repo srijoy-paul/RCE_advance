@@ -17,9 +17,9 @@ function LandingPage() {
 
   const navigate = useNavigate();
   return (
-    <section className="h-full w-full  flex items-center justify-center">
+    <section className="h-screen w-full  flex items-center justify-center  bg-slate-950">
       <div className="flex flex-col w-[420px]  space-y-5">
-        <h1 className="text-lg font-bold">Create a Project</h1>
+        <h1 className="text-3xl text-slate-200 font-bold">Create a Project</h1>
         <input
           className="bg-slate-100 p-2 border-2 border-red-100"
           type="text"
@@ -28,7 +28,9 @@ function LandingPage() {
           onChange={(e) => setReplId(e.target.value)}
         />
         <div id="langOptionsContainer" className="flex items-center gap-2">
-          <p className="text-md font-bold">Choose you tech stack:</p>
+          <p className="text-md font-bold text-slate-200">
+            Choose you tech stack:
+          </p>
           <select
             className="bg-slate-100 cursor-pointer p-2"
             name="language"
@@ -41,7 +43,7 @@ function LandingPage() {
         </div>
         <div className="flex justify-center">
           <button
-            className="bg-slate-400 p-2 px-5 rounded-md text-white"
+            className="bg-slate-600 hover:bg-slate-700 p-2 px-5 rounded-md text-white"
             disabled={loading}
             onClick={async () => {
               setLoading(true);

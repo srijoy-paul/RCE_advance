@@ -1,5 +1,7 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Socket } from "socket.io-client";
+import { RemoteFile, File, buildFileTree } from "../../utils/filesManager";
+import { FileTree } from "../FileTree/Filetree";
 
 type Props = {
   files: RemoteFile[];
@@ -12,6 +14,13 @@ function Editor({ files, onSelect, selectedFile, socket }: Props) {
   const rootDir = useMemo(() => {
     return buildFileTree(files);
   }, [files]);
+
+  useEffect(() => {
+    if (!selectedFile) {
+      onSelect(rootDir.files[0]);
+    }
+  }, [selectedFile]);
+
   return (
     <div className="flex">
       <aside id="sidebar" className="w-[250px]">
@@ -20,8 +29,10 @@ function Editor({ files, onSelect, selectedFile, socket }: Props) {
           selectedFile={selectedFile}
           onSelect={onSelect}
         />
+        FileTree
       </aside>
-      <Code socket={socket} selectedFile={selectedFile} />
+      {/* <Code socket={socket} selectedFile={selectedFile} /> */}
+      code
     </div>
   );
 }
