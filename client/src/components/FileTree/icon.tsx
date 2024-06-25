@@ -3,6 +3,7 @@ import {
   SiHtml5,
   SiCss3,
   SiJavascript,
+  SiReact,
   SiTypescript,
   SiJson,
 } from "react-icons/si";
@@ -12,9 +13,9 @@ import { AiFillFileText } from "react-icons/ai";
 function getIconHelper() {
   const cache = new Map<string, ReactNode>();
   cache.set("js", <SiJavascript color="#fbcb38" />);
-  cache.set("jsx", <SiJavascript color="#fbcb38" />);
+  cache.set("jsx", <SiReact color="#fbcb38" />);
   cache.set("ts", <SiTypescript color="#378baa" />);
-  cache.set("tsx", <SiTypescript color="#378baa" />);
+  cache.set("tsx", <SiReact color="#378baa" />);
   cache.set("css", <SiCss3 color="purple" />);
   cache.set("json", <SiJson color="#5656e6" />);
   cache.set("html", <SiHtml5 color="#e04e2c" />);

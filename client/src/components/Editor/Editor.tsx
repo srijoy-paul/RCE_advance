@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 import { Socket } from "socket.io-client";
 import { RemoteFile, File, buildFileTree } from "../../utils/filesManager";
 import { FileTree } from "../FileTree/Filetree";
+import CodeEditor from "./CodeEditor";
 
 type Props = {
   files: RemoteFile[];
@@ -31,7 +32,7 @@ function Editor({ files, onSelect, selectedFile, socket }: Props) {
         />
         FileTree
       </aside>
-      {/* <Code socket={socket} selectedFile={selectedFile} /> */}
+      <CodeEditor socket={socket} selectedFile={selectedFile} />
       code
     </div>
   );
