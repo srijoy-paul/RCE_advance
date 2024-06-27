@@ -53,4 +53,4 @@ export const slug_words = [
 ];
 
 export const EXECUTION_ENGINE_URI = "ws://localhost:3030";
-export const BACKEND_SERVICE_URL = "http://localhost:3020";
+export const BACKEND_SERVICE_URL = "http://localhost:3001";

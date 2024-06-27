@@ -4,18 +4,19 @@ import { File } from "../../utils/filesManager";
 
 type Props = {
   selectedFile: File | undefined;
-  socket: Socket;
+  socket: Socket | null;
 };
 
 function CodeEditor({ selectedFile, socket }: Props) {
   if (!selectedFile) return null;
 
   const code = selectedFile.content;
-  let language = selectedFile.name.split(".").pop();
+  let extension = selectedFile.name.split(".").pop();
+  let language;
 
-  if (language === "js" || language === "jsx") language = "javascript";
-  else if (language === "ts" || language === "tsx") language = "typescript";
-  else if (language === "py") language = "python";
+  if (extension === "js" || extension === "jsx") language = "javascript";
+  else if (extension === "ts" || extension === "tsx") language = "typescript";
+  else if (extension === "py") language = "python";
 
   function debounce(func: (value: string) => void, wait: number) {
     let timeout: number;
@@ -39,7 +40,7 @@ function CodeEditor({ selectedFile, socket }: Props) {
         lineNumbers: "on",
       }}
       onChange={debounce((value: string) => {
-        socket.emit("updateContent", {
+        socket?.emit("updateContent", {
           path: selectedFile.path,
           content: value,
         });

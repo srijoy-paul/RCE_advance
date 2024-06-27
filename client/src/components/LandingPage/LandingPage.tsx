@@ -29,7 +29,7 @@ function LandingPage() {
         />
         <div id="langOptionsContainer" className="flex items-center gap-2">
           <p className="text-md font-bold text-slate-200">
-            Choose you tech stack:
+            Choose your tech stack:
           </p>
           <select
             className="bg-slate-100 cursor-pointer p-2"

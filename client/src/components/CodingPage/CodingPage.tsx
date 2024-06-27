@@ -11,7 +11,7 @@ function useSocket(replId: string) {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const newSocket = io(`ws://${replId}.rce-runner.duckdns.org`);
+    const newSocket = io(`ws://${replId}.srijoy-paul.online`);
     setSocket(newSocket);
 
     return () => {
@@ -26,18 +26,19 @@ export default function CodingPage() {
   const [podCreated, setPodCreated] = useState(false);
   const [searchParams] = useSearchParams();
   const replId = searchParams.get("replId") ?? "";
+  console.log("replId from coding page", replId);
 
   useEffect(() => {
     (async () => {
       if (replId) {
-        // const response = await fetch("http://localhost:3023/start", {
-        //   method: "POST",
-        //   headers: {
-        //     Content: "application/json",
-        //     body: JSON.stringify({ replId }),
-        //   },
-        // });
-        // if (!response.ok) throw new Error("Error while booting your ground.");
+        const response = await fetch("http://localhost:3002/api/v1/start", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ replId }),
+        });
+        if (!response.ok) throw new Error("Error while booting your ground.");
         setPodCreated(true);
       }
     })();
@@ -59,19 +60,19 @@ export const CodingPagePostPodCreation = () => {
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
   const [showOutput, setShowOutput] = useState(false);
 
-  // useEffect(() => {
-  //   if (socket) {
-  //     socket.on("loaded", ({ rootContent }: { rootContent: RemoteFile[] }) => {
-  //       setLoaded(true);
-  //       setFileStructure(rootContent);
-  //     });
-  //   }
-  // }, [socket]);
+  useEffect(() => {
+    if (socket) {
+      socket.on("loaded", ({ rootContent }: { rootContent: RemoteFile[] }) => {
+        setLoaded(true);
+        setFileStructure(rootContent);
+      });
+    }
+  }, [socket]);
 
   const onSelect = (file: File) => {
     console.log("file from codingpage", file);
 
-    if (file.type === Type.DIRECTORY) {
+    if (file?.type === Type.DIRECTORY) {
       socket?.emit("fetchDir", file.path, (data: RemoteFile[]) => {
         setFileStructure((prev) => {
           const allFiles = [...prev, ...data];

@@ -23,24 +23,25 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - >
-              aws s3 cp s3://rce-service/code/service_name/ /
-              workspace/ --recursive && echo "Resources copied from s3";
+              aws s3 cp s3://rce-service/code/service_name/ /workspace/ --recursive && 
+              echo "Resources copied from s3";
           env:
-            - name:
+            - name: AWS_ACCESS_KEY_ID
               value:
-            - name:
+            - name: AWS_SECRET_ACCESS_KEY
               value:
           volumeMounts:
             - name: workspace-volume
               mountPath: /workspace
       containers:
         - name: runner
-          image:
+          # instead of keeping pulling it from docker hub, can pull it from GCR(Google container registry) for more quicker pulls and less bandwidth consumption
+          image: srijoypaul/runner-service:latest
           ports:
             - containerPort: 3001
             - containerPort: 3000
           volumeMounts:
-            - name:
+            - name: workspace-volume
               mountPath: /workspace
           resources:
             requests:
@@ -75,21 +76,23 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host:
+    - host: service_name.srijoy-paul.online
       http:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: service_name
-              port:
-                number: 3001
-    - host:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: service_name
+                port:
+                  number: 3001
+    - host: service_name.rce-runner.twilightparadox.com
       http:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: service_name
-              port:
-                number: 3000
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: service_name
+                port:
+                  number: 3000

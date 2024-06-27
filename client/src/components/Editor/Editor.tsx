@@ -8,7 +8,7 @@ type Props = {
   files: RemoteFile[];
   onSelect: (file: File) => void;
   selectedFile: File | undefined;
-  socket: Socket;
+  socket: Socket | null;
 };
 
 function Editor({ files, onSelect, selectedFile, socket }: Props) {
@@ -30,10 +30,8 @@ function Editor({ files, onSelect, selectedFile, socket }: Props) {
           selectedFile={selectedFile}
           onSelect={onSelect}
         />
-        FileTree
       </aside>
       <CodeEditor socket={socket} selectedFile={selectedFile} />
-      code
     </div>
   );
 }
