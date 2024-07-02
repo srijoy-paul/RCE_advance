@@ -75,6 +75,10 @@ metadata:
   name: service_name
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - service_name.srijoy-paul.online
+      secretName: tls-secret
   rules:
     - host: service_name.srijoy-paul.online
       http:

@@ -11,7 +11,7 @@ function useSocket(replId: string) {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const newSocket = io(`ws://${replId}.srijoy-paul.online`);
+    const newSocket = io(`ws://${replId}.srijoy-paul.online:3001`);
     setSocket(newSocket);
 
     return () => {
